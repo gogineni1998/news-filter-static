@@ -1,17 +1,40 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from 'react'
+import JSON from './db.json'
 
+import ReactDOM from 'react-dom/client'
+import Header from './components/header'
+import NewsList from './components/news_list'
+class App extends React.Component {
+        state = {
+                news: JSON,
+                filtered: [],
+                results: JSON.length
+        }
+        changeColor = (event) => {
+                let filtered = this.state.news.filter((item) => {
+                        return (
+                                item.title.toLowerCase().indexOf(event.target.value.toLowerCase()) > -1
+                        )
+                })
+                this.setState({
+                        filtered,
+                        results: filtered.length
+                })
+        }
+        render() {
+                return (
+                        <div>
+                                <Header
+                                        changeColor={this.changeColor}
+                                        count={this.state.results}
+                                />
+                                <NewsList
+                                        news={this.state.filtered.length === 0 ? this.state.news : this.state.filtered}
+                                />
+                        </div>
+                );
+        }
+
+}
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+root.render(<App />)

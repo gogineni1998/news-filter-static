@@ -4,6 +4,7 @@ import JSON from './db.json'
 import ReactDOM from 'react-dom/client'
 import Header from './components/header'
 import NewsList from './components/news_list'
+
 class App extends React.Component {
         state = {
                 news: JSON,
@@ -31,6 +32,7 @@ class App extends React.Component {
                                 <NewsList
                                         news={this.state.filtered.length === 0 ? this.state.news : this.state.filtered}
                                 />
+
                         </div>
                 );
         }
